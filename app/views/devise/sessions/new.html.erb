@@ -1,0 +1,15 @@
+<%= form_with model: @user, url: user_session_path, local: true do |f| %>
+  <div class="field">
+    <%= f.label :email, "メールアドレス" %><br />
+    <%= f.email_field :email, id: "user_email", autofocus: true %>
+        </div>
+
+    <div class="field">
+      <%= f.label :password, "パスワード" %><br />
+      <%= f.password_field :password, id: "user_password" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "ログイン", class: :form__btn %>
+    </div>
+<% end %>
