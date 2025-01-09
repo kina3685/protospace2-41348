@@ -1,12 +1,12 @@
 <main class="main">
   <div class="inner">
     <div class="prototype__wrapper">
+  
       <p class="prototype__hedding">
         <%= @prototype.title %>
       </p>
       <!-- プロトタイプ投稿者のリンク -->
-      <%= link_to @prototype.user.name, user_path(@prototype.user), class: "prototype__user" %>
-      
+      <%= link_to "by #{@prototype.user.name}", user_path(@prototype.user), class: "prototype__user" %>
       <%# プロトタイプの投稿者とログインしているユーザーが同じであれば以下を表示する %>
       <% if user_signed_in? && current_user == @prototype.user %>
         <div class="prototype__manage">
