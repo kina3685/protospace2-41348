@@ -1,7 +1,6 @@
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!,except: [:index, :show]
-  before_action :move_to_index, except: [:index, :show, :new, :create]
 
+before_action :move_to_index, except: [:index, :show, :new, :create]
   
 
 
@@ -13,7 +12,6 @@ class PrototypesController < ApplicationController
     @prototype = Prototype.new
   end
 
-  def create
 
     def create
       @prototype = Prototype.new(prototype_params)
@@ -24,7 +22,6 @@ class PrototypesController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     end
-  end
 
   def show
     @comment = Comment.new
