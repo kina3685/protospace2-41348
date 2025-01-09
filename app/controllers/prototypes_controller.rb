@@ -1,5 +1,9 @@
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!,except: [:index, :show]
+  before_action :move_to_index, except: [:index, :show, :new, :create]
+
+  
+
 
   def index
     @prototypes = Prototype.all
@@ -10,8 +14,16 @@ class PrototypesController < ApplicationController
   end
 
   def create
-    Prototype.create(prototype_params)
-    redirect_to '/'
+
+    def create
+      @prototype = Prototype.new(prototype_params)
+      if @prototype.save
+        redirect_to root_path, notice: 'プロトタイプを投稿しました！'
+      else
+        # saveが失敗した場合、投稿ページを再表示
+        render :new, status: :unprocessable_entity
+      end
+    end
   end
 
   def show
@@ -42,6 +54,12 @@ class PrototypesController < ApplicationController
   end
 
   private
+
+  def move_to_index
+    prototype = Prototype.find(params[:id])
+    # ログイン中のユーザーが投稿者でない場合トップページにリダイレクト
+    redirect_to root_path unless prototype.user == current_user
+  end
 
   def prototype_params
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
